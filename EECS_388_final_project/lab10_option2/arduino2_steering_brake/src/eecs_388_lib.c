@@ -364,3 +364,44 @@ void uart_init()
 	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00); // 8-bit data, leaves parity/stop/mode to defaults (no parity, 1 stop, async)
 }
 
+
+/******************************************************************************
+ *  Timer Interrupt Functions
+ *******************************************************************************/
+
+uint16_t get_cycles(void) {
+	//return current cycle
+	return TCNT1;
+
+}
+
+void set_cycles(uint16_t cycle) {
+	//Clear the count in Timer1
+
+	TCNT1 = 0;
+
+	//Set the compare value in the OCR1A register
+	OCR1A = cycle;
+}
+
+void enable_interrupt(void) {
+	sei(); // set SREG I-bit
+}
+
+void disable_interrupt(void) {
+	cli(); // clear SREG I-bit
+}
+
+void enable_timer_interrupt(void) {
+	
+	TCCR1A = 0; // clear TCCR1A
+
+	//set up CTC
+	TCCR1B = 0x000C; //WGM12 set to 1, CS12 set to 1 ; 0C = (0000 1100)
+	TIMSK1 |= 0x0002; 	//OCIE1A set to 1
+}
+
+void disable_timer_interrupt(void) {
+	//In TIMSK1: Clear the OCIE1A bit to disable the timer interrupt.
+	TIMSK1 &= ~(1 << OCIE0A);  //This will use the complement operator and a bitwise OR operation to clear just the bit specified by XXX
+}
