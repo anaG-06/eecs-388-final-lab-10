@@ -78,9 +78,6 @@ ISR(TIMER1_COMPA_vect)
       gpio_write(RED, led_state);
     }
 
-    //pwm??
-
-
 }
 
  static void auto_brake()
@@ -92,26 +89,27 @@ ISR(TIMER1_COMPA_vect)
     //distance will change with delays to test led changes
     //will change to actual values from ardiuno_1 in task 3
 
-    // loops thru different dists for testing
-    dist = 300;
-    ser_printf("dist: %d", dist);
-    delay_ms(1000);
+    // // loops thru different dists for testing
+    // dist = 300;
+    // ser_printf("dist: %d", dist);
+    // delay_ms(1000);
 
-    dist = 30;
-    ser_printf("dist: %d", dist);
-    delay_ms(1000);
+    // dist = 30;
+    // ser_printf("dist: %d", dist);
+    // delay_ms(1000);
     
-    dist = 85;
-    ser_printf("dist: %d", dist);
-    delay_ms(1000);
+    // dist = 85;
+    // ser_printf("dist: %d", dist);
+    // delay_ms(1000);
     
     
-    dist = 150;
-    ser_printf("dist: %d", dist);
-    delay_ms(1000);
+    // dist = 150;
+    // ser_printf("dist: %d", dist);
+    // delay_ms(1000);
     //receive distance values from Arduino1
-    // dist = receive_distance();
-    // ser_printf("distance: %d", dist);
+    
+    dist = receive_distance();
+    ser_printf("distance: %d", dist);
 
 
 }
@@ -239,6 +237,9 @@ for (int i = 0; i < 10; i++)
 {
   angle = angle_values[i];
   ser_printf("angle: %d", angle);
+  // Task-1&2:
+  // Receive data from arudino1 for the distance and setup the LEDs
+  auto_brake();
 
   for( int j = 0; j < 50; j++ )//controls servo for one second
   {
@@ -248,30 +249,4 @@ for (int i = 0; i < 10; i++)
 }
 
 
-// Task-1&2:
-// Receive data from arudino1 for the distance and setup the LEDs
-auto_brake();
-
-//  Task-4:
-for (int i = 0; i < 10; i++)
-  {
-  // Here, we set the angle to 180 if the prediction from the DNN is a positive angle
-  // and 0 if the prediction is a negative angle.
-  // This is so that it is easier to see the movement of the servo.
-  // You are welcome to pass the angle values directly to the steering function.
-  // If the servo function is written correctly, it should still work,
-  // only the movements of the servo will be more subtle
-  if( angle > 0 )
-    {
-    steering(180);
-    }
-  else 
-    {
-    steering(0);
-    }
-           
-  // Uncomment the line below to see the actual angles on the servo.
-  // Remember to comment out the if-else statement above!
-  // steering(angle);
-  }
 }
