@@ -377,12 +377,16 @@ uint16_t get_cycles(void) {
 
 void set_cycles(uint16_t cycle) {
 	//Clear the count in Timer1
-
 	TCNT1 = 0;
 
 	//Set the compare value in the OCR1A register
 	OCR1A = cycle;
 }
+
+// void set_cycles_B(uint16_t cycleB)
+// {
+// 	OCR1B = get_cycles() + cycleB; //set compare value for a second interrupt, after A
+// }
 
 void enable_interrupt(void) {
 	sei(); // set SREG I-bit

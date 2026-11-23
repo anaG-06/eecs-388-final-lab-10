@@ -59,6 +59,8 @@ void uart_init();
  *******************************************************************************/
 uint16_t get_cycles(void);
 void set_cycles(uint16_t cycle);
+// void set_cycles_B(uint16_t cycleB);
+
 
 void enable_interrupt(void);
 void disable_interrupt(void);
